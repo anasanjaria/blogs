@@ -1,0 +1,62 @@
+version: "3.0"
+services:
+  etcd1:
+    image: bitnami/etcd:3.4.3
+    container_name: etcd-1
+    command: etcd -name etcd1
+    ports:
+      - "2379:2379"
+    environment:
+      ETCD_ENABLE_V2: 'true'
+      ALLOW_NONE_AUTHENTICATION: 'yes'
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: http://etcd1:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_ADVERTISE_CLIENT_URLS: http://etcd1:2379
+      ETCD_INITIAL_CLUSTER: etcd1=http://etcd1:2380
+      ETCD_INITIAL_CLUSTER_STATE: new
+      ETCD_INITIAL_CLUSTER_TOKEN: pgEtcdCluster
+  node-1: &node-1
+    container_name: node-1
+    depends_on:
+      - etcd1
+    image: ghcr.io/zalando/spilo-15:3.0-p1
+    ports:
+      # Port 5432       Postgres
+      # Port 8008       Patroni
+      - "5432:5432"
+      - "8008:8008"
+    environment:
+      # All environment variables are explained here.
+      # https://github.com/zalando/spilo/blob/master/ENVIRONMENT.rst
+      PGPASSWORD_SUPERUSER: 'password'
+      PGPASSWORD_STANDBY: 'password'
+      # Determines which cloud provider are we using say Google? AWS? Openstack? Local?
+      SPILO_PROVIDER: 'local'
+      SCOPE: 'test-cluster'
+      PGVERSION: 13
+      USE_ADMIN: 'false'
+      ETCD_HOSTS: etcd1
+
+  node-2:
+    <<: *node-1
+    container_name: node-2
+    ports:
+      - "5433:5432"
+      - "8009:8008"
+
+  node-3:
+    <<: *node-1
+    container_name: node-3
+    image: ghcr.io/zalando/spilo-15:3.1-p1
+    ports:
+      - "5434:5432"
+      - "8010:8008"
+
+  node-4:
+    <<: *node-1
+    container_name: node-4
+    image: ghcr.io/zalando/spilo-15:3.1-p1
+    ports:
+      - "5435:5432"
+      - "8011:8008"

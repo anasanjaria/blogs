@@ -26,6 +26,14 @@ services:
       # Port 8008       Patroni
       - "5432:5432"
       - "8008:8008"
+    volumes:
+      - ./pgupgrade.sh:/opt/pgupgrade.sh:Z
+      # ensure these volumes have correct permission.
+      # id of postgres user used inside the container (id -u postgres) => 101
+      # group of postgres user used inside the container (id -g postgres) => 103
+      # 101 & 103 both belongs to postgres user & group
+      # chown 101:103 your-directory-here
+      - ./data-1:/home/postgres/pgdata:Z
     environment:
       # All environment variables are explained here.
       # https://github.com/zalando/spilo/blob/master/ENVIRONMENT.rst
@@ -44,6 +52,13 @@ services:
     ports:
       - "5433:5432"
       - "8009:8008"
+    volumes:
+      # ensure these volumes have correct permission.
+      # id of postgres user used inside the container (id -u postgres) => 101
+      # group of postgres user used inside the container (id -g postgres) => 103
+      # 101 & 103 both belongs to postgres user & group
+      # chown 101:103 your-directory-here
+      - ./data-2:/home/postgres/pgdata:Z
 
   node-3:
     <<: *node-1

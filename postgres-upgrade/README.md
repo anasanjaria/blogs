@@ -1,14 +1,33 @@
-# Guide for upgrading PostgreSQL cluster
+# PostgreSQL Cluster Upgrade Guide
 
-This setup uses Zalando's spilo repository to form a cluster. It also contains script to facilitate
-major version upgrade.
+This repository contains scripts and configurations for setting up and upgrading a PostgreSQL cluster using Zalando's spilo repository. 
+It provides guides for both minor and major version upgrades.
 
-When it comes to upgrading PostgreSQL database, there are 2 ways to handle upgrade:
+## Getting Started
 
-1. Minor version upgrade.
-2. Major version upgrade.
+To set up a local cluster, follow these steps:
 
-I have covered both upgrades in detail in my blog post.
+1. Ensure you have sudo privileges.
+2. Run the setup script:
+```
+./setup.sh
+```
+3. Start the first node:
+```
+docker-compose up -d node-1
+```
+4. Wait until the cluster is healthy.
+5. Start the second node
+```
+docker-compose up -d node-2
+```
+6. To tear down completely.
+```
+./teardown.sh
+```
+## Upgrade Process
+
+I have covered both upgrades in detail in my following blog posts.
 
 - [Minor version upgrade guide](https://medium.com/@anasanjaria/optimize-postgresql-minor-version-upgrade-guide-7101a94236de)
-- [Major version upgrade guide](...)
+- [Major version upgrade guide](https://medium.com/@anasanjaria/7af55e2c80a5)

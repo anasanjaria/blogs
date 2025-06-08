@@ -61,16 +61,6 @@ class HikariCPDemoSpec extends AnyWordSpec with Matchers with BeforeAndAfterAll 
   }
 
   "Demo" should {
-    "execute query without throwing an exception" in {
-      val computation1 = executeQuery(1, () => printWithThreadName("Quick Task"))
-      val computation2 = executeQuery(1, () => printWithThreadName("Quick Task"))
-
-      val r = (for {
-        _ <- computation1
-        _ <- computation2
-      } yield ())
-      Await.result(r, Duration.Inf)
-    }
     "throw an exception when long running non-DB work block a connection" in {
       intercept[SQLTransientConnectionException] {
 

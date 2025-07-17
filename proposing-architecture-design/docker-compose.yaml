@@ -1,0 +1,25 @@
+services:
+  plantuml:
+    image: plantuml/plantuml
+    container_name: plantuml
+    depends_on:
+      - structurizr
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    command: ["java", "-jar", "/opt/plantuml/plantuml.jar", "/workspace/diagrams/*.puml"]
+  structurizr:
+    image: structurizr/cli:2025.05.28
+    container_name: structurizr-export
+    volumes:
+      - .:/usr/local/structurizr:Z
+    command:
+      [
+          "export",
+          "-f",
+          "plantuml",
+          "-o",
+          "/usr/local/structurizr/diagrams",
+          "--workspace",
+          "/usr/local/structurizr/workspace.dsl"
+        ]

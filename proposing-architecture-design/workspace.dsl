@@ -18,8 +18,8 @@ workspace {
                 tags "backend"
             }
 
-            psql = container "PostgreSQL" {
-                tags "psql"
+            psql = container "MySQL" {
+                tags "db"
             }
         }
 
@@ -56,8 +56,10 @@ workspace {
                 color #ffffff
             }
 
-            element "psql" {
+            element "db" {
                 shape cylinder
+                background #eb2f1a
+                color #FFFFFF
             }
 
             element "external" {

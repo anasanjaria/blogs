@@ -2,6 +2,10 @@
 
 This project models an online shopping system using `structurizr DSL` for architecture diagrams.
 
+## Blog
+For more detailed explanations of the concepts demonstrated in this project, check out my blog post:
+https://levelup.gitconnected.com/streamlining-design-reviews-my-experience-with-c4-model-7a47469804e8
+
 ## Architecture Overview
 
 High level overview of the system.
@@ -25,3 +29,4 @@ docker compose up structurizr && \
 
 ## More examples
 https://github.com/structurizr/examples
+

@@ -28,5 +28,5 @@ docker compose up structurizr && \
 ```
 
 ## More examples
-https://github.com/structurizr/examples
-
+- https://github.com/structurizr/examples
+- https://github.com/max-arshinov/masad

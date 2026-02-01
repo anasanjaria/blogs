@@ -1,28 +1,40 @@
 # HikariCP Timeout Demo
 
-A demonstration project showing how connection timeouts work in HikariCP with Scala.
+A small demonstration project that explains **how and why connection timeouts happen in HikariCP**, using Scala and PostgreSQL.
 
+This repo focuses on *real-world failure patterns* you’re likely to see in production systems.
 
-## Overview
-This project demonstrates various scenarios with HikariCP connection pooling:
-- Connection timeout when non-DB work blocks a connection
-- Connection timeout when a long-running query blocks other queries
+## What this project demonstrates
 
-## Requirements
-PostgreSQL database running on localhost:5432
-```
+The examples cover common scenarios that lead to HikariCP timeouts:
+
+- ⏳ Connection timeouts caused by **non-database work holding a connection**
+- 🐢 Connection starvation caused by **slow or long-running queries**
+- 🧵 How pool size, execution model, and workload interact under pressure
+
+The goal is not to tune HikariCP blindly, but to understand **what’s actually blocking connections**.
+
+## Prerequisites
+
+- PostgreSQL running on `localhost:5432`
+
+You can start a local database using Docker:
+
+```bash
 docker compose up -d
 ```
 
-## Blog Posts
-For more detailed explanations of the concepts demonstrated in this project,
-check out my blog posts:
-- [Optimize HikariCP Pool to Prevent Timeouts](https://medium.com/@anasanjaria/optimize-hikaricp-pool-to-prevent-timeouts-4bdc1120a273)
-- [How to Prevent HikariCP Timeout Failures](https://medium.com/@anasanjaria/how-to-prevent-hikaricp-timeout-failures-9486f398e15c)
+## Related content
 
-## Running the Project
-To run the project, use the following command:
+If you want a deeper explanation of the concepts shown here, check out:
 
-```bash
-sbt test
-```
+[Understanding HikariCP Connection Timeout | 3 Real-World Examples Explained](https://youtu.be/YzVdaoJEnRk)
+
+✍️ Blog posts
+
+- [Optimize HikariCP Pool to Prevent Timeouts](https://medium.com/illumination/optimize-hikaricp-pool-to-prevent-timeouts-4bdc1120a273)
+- [How to Prevent HikariCP Timeout Failures](https://medium.com/illumination/how-to-prevent-hikaricp-timeout-failures-9486f398e15c)
+
+Running the project
+
+Run the test suite to reproduce the scenarios:
